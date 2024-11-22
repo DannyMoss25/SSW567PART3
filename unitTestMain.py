@@ -36,20 +36,15 @@ class TestStringMethods(unittest.TestCase):
 
 
 
-        before = time.perf_counter()
-        self.assertNotEqual(main.timing(1000), "testing")
-        after = time.perf_counter()
-        fourth = main.timing(1000)
-        data.append([1000, fourth, after - before])
+        # Test for values between 1000 and 10000, step 1000
+        for num_lines in range(1000, 11000, 1000):
+            before = time.perf_counter()
+            result = main.timing(num_lines)
+            after = time.perf_counter()
 
-
-
-        fifth = main.timing(10000)
-        before = time.perf_counter()
-        self.assertNotEqual(main.timing(10000), "testing")
-        after = time.perf_counter()
-        data.append([10000, fifth, after - before])
-
+            # Add assertions and record data
+            self.assertNotEqual(result, "testing")
+            data.append([num_lines, result, after - before])
         with open('RecordReportFull.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerows(data)
